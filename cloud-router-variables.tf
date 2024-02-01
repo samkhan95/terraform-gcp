@@ -3,6 +3,21 @@ variable "router_name" {
   default = "nat-router"
 }
 
+variable "router_region" {
+  type    = string
+  default = "us-central1"
+}
+
+variable "router_project_id" {
+  type    = string
+  default = "samad-410909"
+}
+
+variable "router_network_name" {
+  type    = string
+  default = "vpc-dev"
+}
+
 variable "nats" {
   type = list(object({
     name                                = string
