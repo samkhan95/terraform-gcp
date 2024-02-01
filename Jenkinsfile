@@ -1,34 +1,50 @@
 pipeline {
 
-    agent any
-
-    tools{
-        terraform "terraform"
+  agent {
+    kubernetes {
+      label 'sample-app'
+      defaultContainer 'jnlp'
+      yaml """
+  apiVersion: v1
+  kind: Pod
+  metadata:
+  labels:
+    component: ci
+  spec:
+    # Use service account that can deploy to all namespaces
+    serviceAccountName: cd-jenkins
+    containers:
+    - name: terraform
+      image: hashicorp/terraform
+      command:
+      - cat
+      tty: true
+  """
+  }
+}
+  stages {
+    stage('Terraform init') {
+      steps {
+        container('terraform') {
+          sh "terraform init"
+        }
+      }
     }
 
-
-stages{
-
-        stage('Initialize'){
-            steps{
-                
-                sh 'terraform init'
-            
-            }
+    stage('Terraform plan') {
+      steps {
+        container('terraform') {
+          sh "terraform plan"
         }
-        stage('Plan'){
-            steps{
-                
-                sh 'terraform plan'
-            
-            }
-        }
-        stage('apply'){
-            steps{
-                
-                sh 'terraform apply -auto-approve'
-            
-            }
-        }
+      }
     }
+
+    stage('Terraform apply') {
+      steps {
+        container('terraform') {
+          sh "terraform apply --auto-approve"
+        }
+      }
+    }
+  }
 }
