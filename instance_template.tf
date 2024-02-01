@@ -3,8 +3,8 @@ module "vm_instance_template" {
   version = "10.1.1"
   # insert the 1 required variable here
   network              = var.network
-  project_id           = var.project_id
-  region               = var.region
+  project_id           = var.instance_template_project_id
+  region               = var.instance_template_region
   name_prefix          = var.name_prefix
   service_account      = var.service_account
   source_image         = var.source_image

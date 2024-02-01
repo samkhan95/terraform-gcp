@@ -1,3 +1,14 @@
+variable "instance_template_region" {
+  description = "The region to deploy the resources into."
+  type        = string
+  default     = "us-central1"
+}
+
+variable "instance_template_project_id" {
+  type    = string
+  default = "samad-410909"
+}
+
 variable "network" {
   type = string
 }
