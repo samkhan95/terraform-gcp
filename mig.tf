@@ -1,4 +1,4 @@
-module "mig" {
+module "vm_mig" {
   source                       = "terraform-google-modules/vm/google//modules/mig"
   hostname                     = var.hostname
   mig_name                     = var.mig_name
