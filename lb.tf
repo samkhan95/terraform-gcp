@@ -2,12 +2,13 @@ module "gce-lb-http" {
   source  = "terraform-google-modules/lb-http/google"
   version = "10.1.0"
   name    = var.network_prefix
-  project = var.project_id
+  project = var.lb_project_id
   target_tags = [
     "${var.network_prefix}-group1",
     "${var.network_prefix}-group2"
   ]
-  firewall_networks = [module.vpc.network_name]
+  firewall_networks = ["vpc-dev"]
+  #   firewall_networks = [module.vpc.network_name]
 
   backends = {
     default = {

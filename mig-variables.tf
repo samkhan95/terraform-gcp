@@ -90,3 +90,13 @@ variable "hostname" {
   type    = string
   default = "myvm"
 }
+
+variable "mig_project_id" {
+  type    = string
+  default = "samad-410909"
+}
+
+variable "mig_region" {
+  type    = string
+  default = "us-central1"
+}

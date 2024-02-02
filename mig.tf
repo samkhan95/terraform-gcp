@@ -5,9 +5,9 @@ module "vm_mig" {
   instance_template   = module.vm_instance_template.self_link
   mig_name            = var.mig_name
   named_ports         = var.named_ports
-  project_id          = var.project_id
+  project_id          = var.mig_project_id
   hostname            = var.hostname
-  region              = var.region
+  region              = var.mig_region
   health_check_name   = var.health_check_name
   health_check        = var.health_check
   max_replicas        = var.max_replicas
