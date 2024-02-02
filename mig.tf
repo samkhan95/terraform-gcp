@@ -3,7 +3,7 @@ module "vm_mig" {
   hostname                     = var.hostname
   mig_name                     = var.mig_name
   region                       = var.mig_region
-  instance_template            = module.instance_template.self_link
+  instance_template            = module.vm_instance_template.self_link
   health_check_name            = var.health_check_name
   health_check                 = var.health_check
   autoscaler_name              = var.autoscaler_name
