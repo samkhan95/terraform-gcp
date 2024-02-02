@@ -2,8 +2,8 @@ module "vm_mig" {
   source                       = "terraform-google-modules/vm/google//modules/mig"
   hostname                     = var.hostname
   mig_name                     = var.mig_name
-  project_id                   = var.project_id
-  region                       = var.region
+  project_id                   = var.mig_project_id
+  region                       = var.mig_region
   instance_template            = module.vm_instance_template.self_link
   health_check_name            = var.health_check_name
   health_check                 = var.health_check

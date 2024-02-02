@@ -1,5 +1,7 @@
-hostname = "myvm"
-mig_name = "mymig1"
+hostname       = "myvm"
+mig_region     = "us-central1"
+mig_project_id = "samad-410909"
+mig_name       = "mymig1"
 health_check = {
   type                = "http"
   initial_delay_sec   = 60

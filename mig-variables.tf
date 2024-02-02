@@ -5,6 +5,16 @@ variable "hostname" {
   default     = "default"
 }
 
+variable "mig_region" {
+  description = "The GCP region where the managed instance group resides."
+  type        = string
+}
+
+variable "mig_project_id" {
+  type        = string
+  description = "The GCP project ID"
+}
+
 variable "mig_name" {
   type        = string
   description = "Managed instance group name. When variable is empty, name will be derived from var.hostname."
