@@ -58,5 +58,24 @@ variable "snapshot_schedule" {
       )
     }
   )
-  default = null
+  default = {
+    daily_schedule = {
+      days_in_cycle = 1
+      start_time    = "08:00"
+    }
+    hourly_schedule = {
+      hours_in_cycle = 5
+      start_time     = "08:00"
+    }
+    weekly_schedule = {
+      day_of_weeks = [{
+        day        = "MONDAY"
+        start_time = "08:00"
+        },
+        {
+          day        = "FRIDAY"
+          start_time = "08:00"
+      }]
+    }
+  }
 }
