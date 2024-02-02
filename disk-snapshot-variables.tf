@@ -34,48 +34,43 @@ variable "snapshot_disks" {
 variable "snapshot_schedule" {
   type = object(
     {
-      daily_schedule = object(
-        {
-          days_in_cycle = number
-          start_time    = string
-        }
+      daily_schedule = optional(
+        object(
+          {
+            days_in_cycle = number
+            start_time    = string
+          }
+        )
       )
-      hourly_schedule = object(
-        {
-          hours_in_cycle = number
-          start_time     = string
-        }
+      hourly_schedule = optional(
+        object(
+          {
+            hours_in_cycle = number
+            start_time     = string
+          }
+        )
       )
-      weekly_schedule = object(
-        {
-          day_of_weeks = set(object(
-            {
-              day        = string
-              start_time = string
-            }
-          ))
-        }
+      weekly_schedule = optional(
+        object(
+          {
+            day_of_weeks = optional(
+              set(object(
+                {
+                  day        = string
+                  start_time = string
+                }
+              ))
+            )
+          }
+        )
       )
     }
   )
+
   default = {
     daily_schedule = {
       days_in_cycle = 1
       start_time    = "08:00"
-    }
-    hourly_schedule = {
-      hours_in_cycle = 5
-      start_time     = "08:00"
-    }
-    weekly_schedule = {
-      day_of_weeks = [{
-        day        = "MONDAY"
-        start_time = "08:00"
-        },
-        {
-          day        = "FRIDAY"
-          start_time = "08:00"
-      }]
     }
   }
 }
