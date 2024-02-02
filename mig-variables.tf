@@ -1,26 +1,3 @@
-/**
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// This file was automatically generated from a template in ./autogen
-
-# variable "project_id" {
-#   type        = string
-#   description = "The GCP project ID"
-#   default     = null
-# }
 
 variable "hostname" {
   description = "Hostname prefix for instances"
@@ -34,16 +11,6 @@ variable "mig_name" {
   default     = ""
 }
 
-variable "mig_region" {
-  description = "The GCP region where the managed instance group resides."
-  type        = string
-  default     = "us-central1"
-}
-
-# variable "instance_template" {
-#   description = "Instance template self_link used to create compute instances"
-#   type        = string
-# }
 
 variable "target_size" {
   description = "The target number of running instances for this managed instance group. This value should always be explicitly set unless this resource is attached to an autoscaler, in which case it should never be set."
@@ -51,48 +18,7 @@ variable "target_size" {
   default     = 1
 }
 
-variable "target_pools" {
-  description = "The target load balancing pools to assign this group to."
-  type        = list(string)
-  default     = []
-}
 
-variable "distribution_policy_target_shape" {
-  description = "MIG target distribution shape (EVEN, BALANCED, ANY, ANY_SINGLE_ZONE)"
-  type        = string
-  default     = null
-}
-
-variable "distribution_policy_zones" {
-  description = "The distribution policy, i.e. which zone(s) should instances be create in. Default is all zones in given region."
-  type        = list(string)
-  default     = []
-}
-
-#################
-# Stateful disks
-#################
-variable "stateful_disks" {
-  description = "Disks created on the instances that will be preserved on instance delete. https://cloud.google.com/compute/docs/instance-groups/configuring-stateful-disks-in-migs"
-  type = list(object({
-    device_name = string
-    delete_rule = string
-  }))
-  default = []
-}
-
-#################
-# Stateful IPs
-#################
-variable "stateful_ips" {
-  description = "Statful IPs created on the instances that will be preserved on instance delete. https://cloud.google.com/compute/docs/instance-groups/configuring-stateful-ip-addresses-in-migs"
-  type = list(object({
-    interface_name = string
-    delete_rule    = string
-    is_external    = bool
-  }))
-  default = []
-}
 
 #################
 # Rolling Update
@@ -113,10 +39,6 @@ variable "update_policy" {
   }))
   default = []
 }
-
-##############
-# Healthcheck
-##############
 
 variable "health_check_name" {
   type        = string
@@ -158,9 +80,6 @@ variable "health_check" {
   }
 }
 
-#############
-# Autoscaler
-#############
 variable "autoscaler_name" {
   type        = string
   description = "Autoscaler name. When variable is empty, name will be derived from var.hostname."
@@ -206,35 +125,6 @@ variable "autoscaling_cpu" {
   default = []
 }
 
-variable "autoscaling_metric" {
-  description = "Autoscaling, metric policy block as single element array. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#metric"
-  type = list(object({
-    name   = string
-    target = number
-    type   = string
-  }))
-  default = []
-}
-
-variable "autoscaling_lb" {
-  description = "Autoscaling, load balancing utilization policy block as single element array. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#load_balancing_utilization"
-  type        = list(map(number))
-  default     = []
-}
-
-variable "scaling_schedules" {
-  description = "Autoscaling, scaling schedule block. https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_autoscaler#scaling_schedules"
-  type = list(object({
-    disabled              = bool
-    duration_sec          = number
-    min_required_replicas = number
-    name                  = string
-    schedule              = string
-    time_zone             = string
-  }))
-  default = []
-}
-
 variable "autoscaling_scale_in_control" {
   description = "Autoscaling, scale-in control block. https://www.terraform.io/docs/providers/google/r/compute_autoscaler#scale_in_control"
   type = object({
@@ -249,136 +139,14 @@ variable "autoscaling_scale_in_control" {
   }
 }
 
-##########################
-
 variable "named_ports" {
   description = "Named name and named port. https://cloud.google.com/load-balancing/docs/backend-service#named_ports"
   type = list(object({
     name = string
     port = number
   }))
-  default = []
+  default = [{
+    name = "http"
+    port = 80
+  }]
 }
-
-variable "wait_for_instances" {
-  description = "Whether to wait for all instances to be created/updated before returning. Note that if this is set to true and the operation does not succeed, Terraform will continue trying until it times out."
-  type        = string
-  default     = "false"
-}
-
-variable "mig_timeouts" {
-  description = "Times for creation, deleting and updating the MIG resources. Can be helpful when using wait_for_instances to allow a longer VM startup time. "
-  type = object({
-    create = string
-    update = string
-    delete = string
-  })
-  default = {
-    create = "5m"
-    update = "5m"
-    delete = "15m"
-  }
-}
-
-# variable "mig_name" {
-#   type    = string
-#   default = "dev-mig"
-
-# }
-
-# variable "named_ports" {
-#   type = list(object({
-#     name = string
-#     port = number
-#   }))
-#   default = [{
-#     name = "http"
-#     port = 80
-#   }]
-# }
-
-# variable "health_check_name" {
-#   type    = string
-#   default = "health-check-port-80"
-# }
-
-# variable "health_check" {
-#   type = object({
-#     type                = string
-#     initial_delay_sec   = number
-#     check_interval_sec  = number
-#     healthy_threshold   = number
-#     timeout_sec         = number
-#     unhealthy_threshold = number
-#     response            = string
-#     proxy_header        = string
-#     port                = number
-#     request             = string
-#     request_path        = string
-#     host                = string
-#     enable_logging      = bool
-#   })
-#   default = {
-#     type                = "http"
-#     check_interval_sec  = 30
-#     enable_logging      = false
-#     healthy_threshold   = 1
-#     host                = ""
-#     initial_delay_sec   = 30
-#     port                = 80
-#     proxy_header        = "NONE"
-#     request             = ""
-#     request_path        = "/"
-#     response            = ""
-#     timeout_sec         = 10
-#     type                = ""
-#     unhealthy_threshold = 5
-#   }
-# }
-
-# variable "min_replicas" {
-#   type    = number
-#   default = 2
-# }
-
-# variable "max_replicas" {
-#   type    = number
-#   default = 4
-# }
-
-# variable "autoscaling_enabled" {
-#   type    = string
-#   default = "true"
-# }
-
-# variable "autoscaling_cpu" {
-#   type = list(object({
-#     target            = number
-#     predictive_method = string
-#   }))
-#   default = [
-#     {
-#       target            = 0.8
-#       predictive_method = "linear"
-#   }]
-# }
-
-# variable "target_size" {
-#   type    = number
-#   default = 1
-# }
-
-# variable "hostname" {
-#   type    = string
-#   default = "myvm"
-# }
-
-# variable "mig_project_id" {
-#   type    = string
-#   default = "samad-410909"
-# }
-
-# variable "mig_region" {
-#   type    = string
-#   default = "us-central1"
-# }

@@ -1,6 +1,5 @@
-hostname   = "myvm"
-mig_name   = "mymig1"
-mig_region = "us-central"
+hostname = "myvm"
+mig_name = "mymig1"
 health_check = {
   type                = "http"
   initial_delay_sec   = 60
