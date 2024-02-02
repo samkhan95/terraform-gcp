@@ -20,7 +20,10 @@ variable "snapshot_retention_policy" {
       on_source_disk_delete = string
     }
   )
-  default = null
+  default = {
+    max_retention_days    = 7
+    on_source_disk_delete = "KEEP_AUTO_SNAPSHOTS"
+  }
 }
 
 variable "snapshot_disks" {
